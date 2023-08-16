@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import AllPagesViewSet, DetailPageView
+from .views import AllPagesListView, BlocksPageListView
 
 urlpatterns = [
-    path('', AllPagesViewSet.as_view()),
-    path('<slug>/', DetailPageView.as_view()),
+    path('', AllPagesListView.as_view()),
+    path('<slug>/', BlocksPageListView.as_view()),
 ]

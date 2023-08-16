@@ -1,7 +1,4 @@
 from django.db import models
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from django.utils import timezone
 
 
 class Page(models.Model):
@@ -25,13 +22,6 @@ class Page(models.Model):
         ordering = ["position"]
 
 
-@receiver(pre_save, sender=Page)
-def pre_save_for_conference_code_fixture(sender, instance, **kwargs):
-    if kwargs['raw']:
-        instance.updated = timezone.now()
-        instance.created = timezone.now()
-
-
 class Block(models.Model):
     """Блок"""
     name = models.CharField("Название", max_length=100)
@@ -45,13 +35,6 @@ class Block(models.Model):
         return f"{self.name}"
 
 
-@receiver(pre_save, sender=Block)
-def pre_save_for_conference_code_fixture(sender, instance, **kwargs):
-    if kwargs['raw']:
-        instance.updated = timezone.now()
-        instance.created = timezone.now()
-
-
 class PageBlock(models.Model):
     """Связь страницы и блока"""
     page = models.ForeignKey(Page, on_delete=models.CASCADE, verbose_name="Страница")
@@ -60,11 +43,3 @@ class PageBlock(models.Model):
 
     updated = models.DateTimeField("Обновлено", auto_now=True)
     created = models.DateTimeField("Создано", auto_now_add=True)
-
-
-@receiver(pre_save, sender=PageBlock)
-def pre_save_for_conference_code_fixture(sender, instance, **kwargs):
-    if kwargs['raw']:
-        instance.updated = timezone.now()
-        instance.created = timezone.now()
-
